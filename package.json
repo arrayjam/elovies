@@ -1,0 +1,8 @@
+{
+  "name": "elo",
+  "version": "0.0.0",
+  "main": "list_to_csv.js",
+  "dependencies": {
+    "d3": "~3.3.9"
+  },
+}
