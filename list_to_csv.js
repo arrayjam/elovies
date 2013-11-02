@@ -1,5 +1,8 @@
 var fs = require("fs"),
-  d3 = require("d3");
+  d3 = require("d3"),
+  request = require("request"),
+  async = require("async");
+
 
 var boundaries = {
   distribution: [0, 16],
@@ -41,8 +44,7 @@ fs.readFile("movie_ratings.list", "utf8", function(err, data) {
   var csv = d3.csv.format(ratings);
   fs.writeFile("movie_ratings.csv", csv);
 
-
-  writeAPILinks(ratings.slice(0, 500));
+  getOMDB(ratings.slice(0, 500));
 });
 
 function byRating(a, b) {
@@ -53,15 +55,35 @@ function byRating(a, b) {
   return 0;
 }
 
-function writeAPILinks(ratings) {
-  var links = ratings.map(function(rating) {
-    return link(rating.title, rating.year);
-  });
-  fs.writeFile("links", links.join("\n"));
+function getOMDB(ratings) {
+  var omdbData = [];
+
+  async.mapSeries(
+    ratings.map(function(rating) { return link(rating.title, rating.year); }),
+    function (url, callback) {
+      omdb(url, function(data) {
+        var omdb_data = JSON.parse(data);
+        console.log(omdb_data);
+        return callback(null, omdb_data);
+      });
+    },
+    function (err, results) {
+      console.log(results);
+      fs.writeFile("omdb.json", JSON.stringify(results, null, 2));
+    }
+  );
 }
 
 function link(title, year) {
-  return "http://www.omdbapi.com/?"
-  + "t=" + encodeURIComponent(title) + "&" +
-    "y=" + encodeURIComponent(year)
+  return "http://www.omdbapi.com/?" +
+    "t=" + encodeURIComponent(title) + "&" +
+    "y=" + encodeURIComponent(year);
+}
+
+function omdb(link, callback) {
+  request(link, function (error, response, body) {
+    if (!error && response.statusCode == 200) {
+      callback(body);
+    }
+  });
 }
