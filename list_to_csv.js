@@ -20,7 +20,8 @@ fs.readFile("movie_ratings.list", "utf8", function(err, data) {
     var game = titleYear.indexOf("(VG)") !== -1;
     var tv = titleYear.indexOf("(TV)") !== -1;
     var tv_movie = titleYear.indexOf("(V)") !== -1;
-    var match = titleYear.match(/(.+)\(([\d/IVX]+)\)/);
+    var match = titleYear.match(/(.+)\(([\d]{4})[/IVX]*\)/);
+    if (!match) match = ["no year!?!??!", titleYear, 0];
     var title = match[1].trim();
     var year = match[2];
     return {
@@ -28,7 +29,7 @@ fs.readFile("movie_ratings.list", "utf8", function(err, data) {
       votes: +votes,
       rating: +rating,
       title: title,
-      year: +year,
+      year: parseInt(year, 10),
       game: game,
       tv: tv,
       tv_movie: tv_movie
@@ -39,6 +40,7 @@ fs.readFile("movie_ratings.list", "utf8", function(err, data) {
   ratings = ratings.filter(function(d) { return !d.game && !d.tv; });
   var csv = d3.csv.format(ratings);
   fs.writeFile("movie_ratings.csv", csv);
+
 
   writeAPILinks(ratings.slice(0, 500));
 });
@@ -52,7 +54,6 @@ function byRating(a, b) {
 }
 
 function writeAPILinks(ratings) {
-  console.log(ratings);
   var links = ratings.map(function(rating) {
     return link(rating.title, rating.year);
   });
