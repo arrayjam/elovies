@@ -49,6 +49,8 @@ d3.json("omdb_with_posters.json", function (err, omdb) {
     side.select(".title").text(function(d) { return d.Title; });
     side.select(".year").text(function(d) { return d.Year; });
     side.select(".poster").attr("src", function(d) { return "posters/" + d.Poster; });
+    side.select(".genre").text(function(d) { return d.Genre; });
+    side.select(".plot").text(function(d) { return d.Plot; });
     side.select(".left").on("click", chooseLeft);
     side.select(".right").on("click", chooseRight);
     grid.data(omdb.sort(function(a, b) { return b.score - a.score; }), id)

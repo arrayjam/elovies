@@ -3,6 +3,7 @@
   <head>
     <title>ELO movies</title>
     <meta charset="utf-8">
+    <link rel="stylesheet" href="vendor/bootstrap/dist/css/bootstrap.min.css">
     <style>
       .center {
         width: 600px;
@@ -25,32 +26,42 @@
       }
 
       .choose .side {
-        width: 400px;
+        min-width: 300px;
         display: inline-block;
         position: relative;
       }
 
-      .choose .side img {
-        position: relative;
-        top: 20px;
+      .bottom {
+        color: #888;
       }
     </style>
   </head>
   <body>
-    <div class="choose">
-      <div class="side left">
-        <h2 class="title"></h2><h3 class="year"></h3>
-        <img class="poster" />
-      </div>
+    <div class="row choose">
+      <div class="container">
+        <div class="col-xs-6 side left">
+          <h2 class="title"></h2>
+          <img class="poster" />
+          <div class="bottom">
+            <h4 class="year"></h4>
+            <p class="lead genre"></p>
+            <p class="small plot"></p>
+          </div>
+        </div>
 
-      <div class="side right">
-        <h2 class="title"></h2><h3 class="year"></h3>
-        <img class="poster" />
+        <div class="col-xs-6 side right">
+          <h2 class="title"></h2>
+          <img class="poster" />
+          <div class="bottom">
+            <h4 class="year"></h4>
+            <p class="lead genre"></p>
+            <p class="small plot"></p>
+          </div>
+        </div>
       </div>
     </div>
 
     <div class="center">
-      <h1>Movies</h1>
       <div class="grid">
       </div>
     </div>
