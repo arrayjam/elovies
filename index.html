@@ -4,6 +4,13 @@
     <title>ELO movies</title>
     <meta charset="utf-8">
     <style>
+      .center {
+        width: 600px;
+        margin: 0 auto;
+        text-align: center;
+        margin-top: 50px;
+      }
+
       .grid {
         position: relative;
       }
@@ -12,11 +19,41 @@
         position: absolute;
         display: inline-block;
       }
+
+      .choose {
+        text-align: center;
+      }
+
+      .choose .side {
+        width: 400px;
+        display: inline-block;
+        position: relative;
+      }
+
+      .choose .side img {
+        position: relative;
+        top: 20px;
+      }
     </style>
   </head>
   <body>
-    <h1>Movies</h1>
-    <div class="grid"></div>
+    <div class="choose">
+      <div class="side left">
+        <h2 class="title"></h2><h3 class="year"></h3>
+        <img class="poster" />
+      </div>
+
+      <div class="side right">
+        <h2 class="title"></h2><h3 class="year"></h3>
+        <img class="poster" />
+      </div>
+    </div>
+
+    <div class="center">
+      <h1>Movies</h1>
+      <div class="grid">
+      </div>
+    </div>
     <script src="vendor/d3/d3.js"></script>
     <script src="elo.js"></script>
   </body>

@@ -1,0 +1,7 @@
+{
+  "name": "elo-movies",
+  "dependencies": {
+    "bootstrap": "~3.0.1",
+    "d3": "~3.3.9"
+  }
+}
