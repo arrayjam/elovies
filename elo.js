@@ -49,6 +49,9 @@ d3.json("omdb_with_posters.json", function (err, omdb) {
     }
   });
 
+  d3.selectAll(".left").on("click", chooseLeft);
+  d3.selectAll(".right").on("click", chooseRight);
+
   d3.select(".save").on("click", function() {
     // First we get a reference to the location of the user’s name data:
     var moviesRef = new Firebase("https://elo-movies.firebaseio.com/elo-movies");
@@ -73,9 +76,6 @@ d3.json("omdb_with_posters.json", function (err, omdb) {
     side.select(".poster").attr("src", function(d) { return "posters/" + d.Poster; });
     side.select(".genre").text(function(d) { return d.Genre; });
     side.select(".plot").text(function(d) { return d.Plot; });
-
-    side.select(".left").on("click", chooseLeft);
-    side.select(".right").on("click", chooseRight);
 
     d3.select(".counter").text(counter);
     grid.data(omdb.sort(function(a, b) { return b.score - a.score; }), id)
