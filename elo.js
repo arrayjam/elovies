@@ -50,8 +50,21 @@ d3.json("omdb_with_posters.json", function (err, omdb) {
   });
 
   d3.select(".save").on("click", function() {
-    console.log(log);
-    console.log(omdb);
+    // First we get a reference to the location of the user’s name data:
+    var moviesRef = new Firebase("https://elo-movies.firebaseio.com/elo-movies");
+    var newSessionRef = moviesRef.push();
+
+    // Set some data to the generated location
+    // newPushRef.set({user_id: 'wilma', text: 'Hello'});
+    newSessionRef.set({
+      log: log,
+      movies: omdb.map(function(d) {
+        return {
+          score: d.score,
+          imdbID: d.imdbID
+        };
+      })
+    });
   });
 
   function update() {
