@@ -41,17 +41,34 @@
       <div class="container">
         <div class="col-xs-6 side left">
           <h2 class="title"></h2>
+        </div>
+        <div class="col-xs-6 side right">
+          <h2 class="title"></h2>
+        </div>
+      </div>
+    </div>
+
+    <div class="row choose">
+      <div class="container">
+        <div class="col-xs-6 side left">
           <img class="poster" />
+        </div>
+        <div class="col-xs-6 side right">
+          <img class="poster" />
+        </div>
+      </div>
+    </div>
+
+    <div class="row choose">
+      <div class="container">
+        <div class="col-xs-6 side left">
           <div class="bottom">
             <h4 class="year"></h4>
             <p class="lead genre"></p>
             <p class="small plot"></p>
           </div>
         </div>
-
         <div class="col-xs-6 side right">
-          <h2 class="title"></h2>
-          <img class="poster" />
           <div class="bottom">
             <h4 class="year"></h4>
             <p class="lead genre"></p>
@@ -62,8 +79,17 @@
     </div>
 
     <div class="center">
-      <div class="grid">
-      </div>
+      <span class="counter"></span> movies compared
+    </div>
+
+    <div class="center">
+      <button class="btn btn-primary save">Save results</button>
+      <p class="lead">Don't forget to click this to save your ratings!</p>
+    </div>
+
+    <div class="center">
+      <h1>Movies: best to worst</h1>
+      <div class="grid"></div>
     </div>
     <script src="vendor/d3/d3.js"></script>
     <script src="elo.js"></script>
