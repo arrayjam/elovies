@@ -1,18 +1,19 @@
-d3.json("omdb_with_posters.json", function (err, omdb) {
+d3.json("data/movies.json", function (err, omdb) {
 
-  //omdb = d3.shuffle(omdb).slice(0, 50);
+  // To test with a small subset
+  // omdb = d3.shuffle(omdb).slice(0, 50);
   omdb.forEach(function(movie) { movie.score = 1600; });
   window.db = omdb;
 
   var log = [];
   window.log = log;
 
-  var width = 600,
-    xImages = 6,
+  var width = 960,
+    xImages = 10,
     imageWidth = width / xImages,
     imageHeight = imageWidth * 1.5,
     gridHeight = omdb.length / xImages,
-    id = function(d) { return d.imdbID; };
+    id = function(d) { return d.imdb.id; };
 
   var x = d3.scale.linear()
     .domain([0, xImages])
@@ -27,10 +28,8 @@ d3.json("omdb_with_posters.json", function (err, omdb) {
 
   grid.enter().append("div")
       .attr("class", "movie")
-      .style("left", function (d, i) { return x(i % xImages) + 10 + "px"; })
-      .style("top", function (d, i) { return y(~~(i / xImages)) + 10 + "px"; })
     .append("img")
-      .attr("src", function (d) { return "posters/" + d.Poster; })
+      .attr("src", function(d) { return "posters/" + d.imdb.id + ".jpg"; })
       .style("width", imageWidth + "px")
       .style("height", imageHeight + "px");
 
@@ -64,18 +63,18 @@ d3.json("omdb_with_posters.json", function (err, omdb) {
       movies: omdb.map(function(d) {
         return {
           score: d.score,
-          imdbID: d.imdbID
+          imdbID: d.imdb.id
         };
       })
     });
   });
 
   function update() {
-    side.select(".title").text(function(d) { return d.Title; });
-    side.select(".year").text(function(d) { return d.Year; });
-    side.select(".poster").attr("src", function(d) { return "posters/" + d.Poster; });
-    side.select(".genre").text(function(d) { return d.Genre; });
-    side.select(".plot").text(function(d) { return d.Plot; });
+    side.select(".title").text(function(d) { return d.title; });
+    side.select(".year").text(function(d) { return d.year; });
+    side.select(".poster").attr("src", function(d) { return "posters/" + d.imdb.id + ".jpg"; });
+    side.select(".genre").text(function(d) { return d.genre; });
+    side.select(".plot").text(function(d) { return d.plot; });
 
     d3.select(".counter").text(log.length);
     grid.data(omdb.sort(function(a, b) { return b.score - a.score; }), id)
@@ -90,8 +89,7 @@ d3.json("omdb_with_posters.json", function (err, omdb) {
 
   function randomMovies() {
     var a = randomMovie(), b = randomMovie();
-    if (a.imdbID === b.imdbID) console.log("DUPE", a.Title);
-    return (a.imdbID === b.imdbID) ? randomMovies() : [a, b];
+    return (a.imdb.id === b.imdb.id) ? randomMovies() : [a, b];
   }
 
   function chooseLeft() {
@@ -115,8 +113,8 @@ d3.json("omdb_with_posters.json", function (err, omdb) {
 
   function logChoice(winner, loser) {
     log.push({
-      winner: winner.imdbID,
-      loser: loser.imdbID,
+      winner: winner.imdb.id,
+      loser: loser.imdb.id,
       time: Date.now()
     });
   }
