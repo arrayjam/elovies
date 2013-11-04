@@ -4,7 +4,7 @@ d3.json("omdb_with_posters.json", function (err, omdb) {
   omdb.forEach(function(movie) { movie.score = 1600; });
   window.db = omdb;
 
-  var log = [], counter = 0;
+  var log = [];
   window.log = log;
 
   var width = 600,
@@ -77,7 +77,7 @@ d3.json("omdb_with_posters.json", function (err, omdb) {
     side.select(".genre").text(function(d) { return d.Genre; });
     side.select(".plot").text(function(d) { return d.Plot; });
 
-    d3.select(".counter").text(counter);
+    d3.select(".counter").text(log.length);
     grid.data(omdb.sort(function(a, b) { return b.score - a.score; }), id)
       .transition()
       .style("left", function (d, i) { return x(i % xImages) + 10 + "px"; })
@@ -109,7 +109,6 @@ d3.json("omdb_with_posters.json", function (err, omdb) {
     winner.score = winner.score + (k * (1 - winner_prob));
     loser.score = loser.score + (k * (0 - winner_prob));
     logChoice(winner, loser);
-    counter += 1;
     choose.data(randomMovies());
     update();
   }
