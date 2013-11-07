@@ -3,6 +3,7 @@
   "dependencies": {
     "bootstrap": "~3.0.1",
     "d3": "~3.3.9",
-    "jquery": "~2.0.3"
+    "jquery": "~2.0.3",
+    "cookies-js": "~0.3.1"
   }
 }
