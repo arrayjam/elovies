@@ -24,7 +24,7 @@ d3.json("data/movies.json", function (err, omdb) {
     });
   } else {
     userId = randomString(6);
-    Cookies.set(userKey, userId);
+    Cookies.set(userKey, userId, { expires: new Date(2016, 0, 1) });
     userRef = rootRef.child(userId);
 
     logRef = userRef.child("log");
